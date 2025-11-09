@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import pl.wsb.fitnesstracker.statistics.api.Statistics;
 
 import java.time.LocalDate;
 
@@ -21,7 +22,16 @@ public class User {
     @Nullable
     private Long id;
 
-    @Column(name = "birthdate", nullable = false)
+    @Column(nullable = false)
+    String firstName;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    Statistics statistics;
+
+    @Column(nullable = false)
+    String lastName;
+
+    @Column(name = "birthday", nullable = false)
     private LocalDate birthdate;
 
     @Column(nullable = false, unique = true)
@@ -33,6 +43,8 @@ public class User {
             final LocalDate birthdate,
             final String email) {
 
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
     }
