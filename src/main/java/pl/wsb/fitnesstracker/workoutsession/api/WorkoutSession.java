@@ -1,12 +1,11 @@
 package pl.wsb.fitnesstracker.workoutsession.api;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import pl.wsb.fitnesstracker.training.api.Training;
 
 @Entity
 @Table(name = "workout_session")

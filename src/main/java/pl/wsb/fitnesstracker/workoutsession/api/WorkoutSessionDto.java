@@ -4,7 +4,7 @@ import jakarta.annotation.Nullable;
 
 public record WorkoutSessionDto(
         @Nullable Long id,
-        int trainingId,
+        long trainingId,
         String timestamp,
         double startLatitude,
         double startLongitude,
