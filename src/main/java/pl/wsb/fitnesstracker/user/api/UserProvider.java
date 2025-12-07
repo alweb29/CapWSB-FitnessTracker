@@ -30,4 +30,12 @@ public interface UserProvider {
      */
     List<User> findAllUsers();
 
+    /**
+     *
+     * @param name
+     * @param lastName
+     * @return An {@link Optional} with user that fits this criteria,
+     */
+    List<User> getUserByNameAndLastName(String name, String lastName);
+
 }
