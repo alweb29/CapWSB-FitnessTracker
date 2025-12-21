@@ -2,6 +2,7 @@ package pl.wsb.fitnesstracker.user.api;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,9 +40,18 @@ public class User {
             final LocalDate birthdate,
             final String email) {
 
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.birthdate = birthdate;
         this.email = email;
     }
 
+    public User(@NotNull Long id, String firstName, String lastName, LocalDate birthdate, String email) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthdate = birthdate;
+        this.email = email;
+    }
 }
 

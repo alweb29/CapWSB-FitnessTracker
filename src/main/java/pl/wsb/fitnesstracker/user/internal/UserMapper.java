@@ -32,4 +32,8 @@ class UserMapper {
     public User toUser(UserDto userDto) {
         return new User(userDto.firstName(), userDto.lastName(), userDto.birthdate(), userDto.email());
     }
+
+    public User updateUser(User user, UserDto userDto) {
+        return new User(user.getId(), userDto.firstName(), userDto.lastName(), userDto.birthdate(), userDto.email());
+    }
 }

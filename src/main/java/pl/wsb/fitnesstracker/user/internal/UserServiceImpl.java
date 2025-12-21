@@ -8,7 +8,6 @@ import pl.wsb.fitnesstracker.user.api.UserDto;
 import pl.wsb.fitnesstracker.user.api.UserProvider;
 import pl.wsb.fitnesstracker.user.api.UserService;
 
-import java.nio.channels.FileChannel;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -44,7 +43,7 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
     @Override
-    public Optional<User> getUserByEmail(final String email) {
+    public List<User> getUsersByEmail(final String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -64,13 +63,15 @@ class UserServiceImpl implements UserService, UserProvider {
                 .collect(Collectors.toMap(User::getId, User::getFirstName));
     }
 
-    public List<User> getAllUsersByAgeGreaterThan(int age) {
+    public List<User> getAllUsersByAgeGreaterThan(LocalDate date) {
         return userRepository.findAll().stream()
-                .filter(user -> {
-                    Period ageOfUser = Period.between(user.getBirthdate(), LocalDate.now());
-                    return age < ageOfUser.getYears();
-                })
+                .filter(user -> date.isAfter(user.getBirthdate()))
                 .toList();
+    }
+
+    public UserDto updateUser(User user, UserDto userDto) {
+        User updatedUser = userMapper.updateUser(user, userDto);
+        return userMapper.toDto(userRepository.save(updatedUser));
     }
 
 //    public List<User> updateLastNameOfAllUsers(String lastName) {

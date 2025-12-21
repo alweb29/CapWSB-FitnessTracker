@@ -1,17 +1,17 @@
 package pl.wsb.fitnesstracker.user.internal;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.PostLoad;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.wsb.fitnesstracker.user.api.User;
 import pl.wsb.fitnesstracker.user.api.UserDto;
 import pl.wsb.fitnesstracker.user.api.UserIdEmailDto;
 import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 /**
  * UserController is responsible for handling HTTP requests related to user operations.
@@ -49,6 +49,12 @@ class UserController {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    @PutMapping("{userId}")
+    public UserDto updateUser(@PathVariable long userId, @RequestBody UserDto userDto) {
+        User user = userService.getUser(userId).orElseThrow(EntityNotFoundException::new);
+        return userService.updateUser(user, userDto);
+    }
+
     @GetMapping("name/{name}/lastname/{lastName}")
     public List<UserDto> getUserByNameAndLastName(@PathVariable String name, @PathVariable String lastName) {
         return userService.getUserByNameAndLastName(name, lastName)
@@ -57,11 +63,11 @@ class UserController {
                 .toList();
     }
 
-    @GetMapping("email/{email}")
-    public UserIdEmailDto getUserById(@PathVariable String email) {
-        return userService.getUserByEmail(email)
+    @GetMapping("email")
+    public List<UserIdEmailDto> getUserByEmail(@RequestParam String email) {
+        return userService.getUsersByEmail(email).stream()
                 .map(userMapper::toUserIdEmailDto)
-                .orElseThrow(EntityNotFoundException::new);
+                .toList();
     }
 
     @PostMapping
@@ -77,7 +83,7 @@ class UserController {
     }
 
     @GetMapping("older/{time}")
-    public List<UserDto> getAllUsersByAgeGreaterThan(@PathVariable int time) {
+    public List<UserDto> getAllUsersByAgeGreaterThan(@PathVariable LocalDate time) {
         return userService.getAllUsersByAgeGreaterThan(time)
                 .stream()
                 .map(userMapper::toDto)

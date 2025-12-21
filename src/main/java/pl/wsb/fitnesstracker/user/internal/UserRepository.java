@@ -13,12 +13,12 @@ interface UserRepository extends JpaRepository<User, Long> {
      * Query searching users by email address. It matches by exact match.
      *
      * @param email email of the user to search
-     * @return {@link Optional} containing found user or {@link Optional#empty()} if none matched
+     * @return {@link List} containing found users
      */
-    default Optional<User> findByEmail(String email) {
+    default List<User> findByEmail(String email) {
         return findAll().stream()
                 .filter(user -> Objects.equals(user.getEmail(), email))
-                .findFirst();
+                .toList();
     }
 
     List<User> findByFirstNameAndLastName(String firstName, String lastName);

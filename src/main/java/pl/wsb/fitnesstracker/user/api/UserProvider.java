@@ -16,12 +16,12 @@ public interface UserProvider {
 
     /**
      * Retrieves a user based on their email.
-     * If the user with given email is not found, then {@link Optional#empty()} will be returned.
+     * If the user with given email is not found, then empty List will be returned.
      *
      * @param email The email of the user to be searched
-     * @return An {@link Optional} containing the located user, or {@link Optional#empty()} if not found
+     * @return An {@link List} containing the located user
      */
-    Optional<User> getUserByEmail(String email);
+    List<User> getUsersByEmail(String email);
 
     /**
      * Retrieves all users.
