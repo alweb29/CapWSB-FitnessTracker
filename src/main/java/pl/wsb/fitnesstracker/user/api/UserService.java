@@ -14,5 +14,10 @@ public interface UserService {
      */
     User createUser(User user);
 
+    /**
+     * Delete user by id.
+     *
+     * @param userId the user id
+     */
     void deleteUserById(Long userId);
 }

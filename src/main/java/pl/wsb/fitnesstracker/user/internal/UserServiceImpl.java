@@ -9,16 +9,18 @@ import pl.wsb.fitnesstracker.user.api.UserProvider;
 import pl.wsb.fitnesstracker.user.api.UserService;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The type User service.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
-class UserServiceImpl implements UserService, UserProvider {
+public class UserServiceImpl implements UserService, UserProvider {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -57,28 +59,39 @@ class UserServiceImpl implements UserService, UserProvider {
     }
 
 
+    /**
+     * Gets all user ids with email.
+     *
+     * @param email the email
+     * @return the all user ids with email
+     */
     public Map<Long, String> getAllUserIdsWithEmail(String email) {
         return userRepository.findAll().stream()
                 .filter(user -> user.getEmail().contains(email))
                 .collect(Collectors.toMap(User::getId, User::getFirstName));
     }
 
+    /**
+     * Gets all users by age greater than.
+     *
+     * @param date the date
+     * @return the all users by age greater than
+     */
     public List<User> getAllUsersByAgeGreaterThan(LocalDate date) {
         return userRepository.findAll().stream()
                 .filter(user -> date.isAfter(user.getBirthdate()))
                 .toList();
     }
 
+    /**
+     * Update user user dto.
+     *
+     * @param user    the user
+     * @param userDto the user dto
+     * @return the user dto
+     */
     public UserDto updateUser(User user, UserDto userDto) {
         User updatedUser = userMapper.updateUser(user, userDto);
         return userMapper.toDto(userRepository.save(updatedUser));
     }
-
-//    public List<User> updateLastNameOfAllUsers(String lastName) {
-//        return  userRepository.findAll().stream()
-//                .map(user -> createUser(new User(user.getFirstName(),
-//                        lastName,
-//                        user.getBirthdate(),
-//                        user.getEmail())));
-//    }
 }

@@ -6,10 +6,19 @@ import pl.wsb.fitnesstracker.user.api.UserDto;
 import pl.wsb.fitnesstracker.user.api.UserIdEmailDto;
 import pl.wsb.fitnesstracker.user.api.UserSimpleDto;
 
+/**
+ * The type User mapper.
+ */
 @Component
-class UserMapper {
+public class UserMapper {
 
-    UserDto toDto(User user) {
+    /**
+     * To dto user dto.
+     *
+     * @param user the user
+     * @return the user dto
+     */
+    public UserDto toDto(User user) {
         return new UserDto(user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
@@ -17,10 +26,22 @@ class UserMapper {
                 user.getEmail());
     }
 
+    /**
+     * To user id email dto user id email dto.
+     *
+     * @param user the user
+     * @return the user id email dto
+     */
     UserIdEmailDto toUserIdEmailDto(User user) {
         return new UserIdEmailDto(user.getId(), user.getEmail());
     }
 
+    /**
+     * To simple dto user simple dto.
+     *
+     * @param user the user
+     * @return the user simple dto
+     */
     UserSimpleDto toSimpleDto(User user) {
         return new UserSimpleDto(
                 user.getId(),
@@ -29,10 +50,23 @@ class UserMapper {
         );
     }
 
+    /**
+     * To user user.
+     *
+     * @param userDto the user dto
+     * @return the user
+     */
     public User toUser(UserDto userDto) {
         return new User(userDto.firstName(), userDto.lastName(), userDto.birthdate(), userDto.email());
     }
 
+    /**
+     * Update user user.
+     *
+     * @param user    the user
+     * @param userDto the user dto
+     * @return the user
+     */
     public User updateUser(User user, UserDto userDto) {
         return new User(user.getId(), userDto.firstName(), userDto.lastName(), userDto.birthdate(), userDto.email());
     }

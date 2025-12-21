@@ -3,6 +3,9 @@ package pl.wsb.fitnesstracker.user.api;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The interface User provider.
+ */
 public interface UserProvider {
 
     /**
@@ -31,9 +34,10 @@ public interface UserProvider {
     List<User> findAllUsers();
 
     /**
+     * Gets user by name and last name.
      *
-     * @param name
-     * @param lastName
+     * @param name     the name
+     * @param lastName the last name
      * @return An {@link Optional} with user that fits this criteria,
      */
     List<User> getUserByNameAndLastName(String name, String lastName);
